@@ -1,16 +1,18 @@
-import * as history from 'history';
-import { BrowserRouter } from 'react-router-dom';
-import Layouts from './layout/layouts';
-import { Route, Routes, useLocation } from 'react-router-dom';
-import Login from './pages/login';
-import Register from './pages/register';
-import Dashboard from './pages/dashboard';
-import Home from './pages/home';
-import Transaksi from './pages/transaksi';
-import AddTransaksi from './pages/add-transksi';
-import Keranjang from './pages/keranjang';
-import Checkout from './pages/checkout';
-import CheckoutTransaksi from './pages/checkout-transaksi';
+import * as history from "history";
+import { BrowserRouter } from "react-router-dom";
+import Layouts from "./layout/layouts";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import Dashboard from "./pages/dashboard";
+import Home from "./pages/home";
+import Transaksi from "./pages/transaksi";
+import AddTransaksi from "./pages/add-transksi";
+import Keranjang from "./pages/keranjang";
+import DetailTransaksi from "./pages/transaksi-step-3";
+import TransaksiStep3 from "./pages/transaksi-step-3";
+import TransaksiStep4 from "./pages/transaksi-step-4";
+import Struk from "./pages/struk";
 
 function App() {
   const browserHistory = history.createBrowserHistory();
@@ -19,17 +21,15 @@ function App() {
     <BrowserRouter history={browserHistory}>
       <Routes>
         <Route index element={<Login />} />
-        <Route path='register' element={<Register />} />
-        <Route path='home' element={<Home />} />
-        <Route path='dashboard' element={<Dashboard />} />
-        <Route path='transaksi' element={<Transaksi />} />
-        <Route path='tambah-transaksi' element={<AddTransaksi />} />
-        <Route path='keranjang' element={<Keranjang />} />
-        <Route path='checkout' element={<Checkout />} />
-        <Route
-          path='checkout-transaksi'
-          element={<CheckoutTransaksi />}
-        />
+        <Route path="register" element={<Register />} />
+        <Route path="home" element={<Home />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="transaksi" element={<Transaksi />} />
+        <Route path="tambah-transaksi" element={<AddTransaksi />} />
+        <Route path="keranjang" element={<Keranjang />} />
+        <Route path="transaksi-step-3" element={<TransaksiStep3 />} />
+        <Route path="transaksi-step-4" element={<TransaksiStep4 />} />
+        <Route path="struk" element={<Struk />} />
         {/* <Layouts>
         </Layouts> */}
       </Routes>
