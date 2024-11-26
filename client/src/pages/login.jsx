@@ -30,7 +30,7 @@ export default function Login() {
         <div className='flex justify-center'>
           <div className='flex items-center justify-between space-x-3'>
             <img
-              src='../../public/logo.png'
+              src='/logo.png'
               alt=''
               className='w-[75px] h-[75px] rounded-[30px]'
             />
