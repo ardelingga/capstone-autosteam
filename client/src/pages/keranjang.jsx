@@ -1,45 +1,42 @@
 import NavMobile from "@/components/nav-mobile";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 
 export default function Keranjang() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Cuci Motor Kecil",
-      price: 15000,
-      quantity: 1,
-      image: "🛵",
-    },
-    {
-      id: 2,
-      name: "Indomie Rebus",
-      price: 8000,
-      quantity: 1,
-      image: "🍜",
-    },
-    {
-      id: 3,
-      name: "Kopi Kapal Api",
-      price: 5000,
-      quantity: 1,
-      image: "☕",
-    },
-  ]);
+  const location = useLocation();
+  const data = location.state;
+  const [cartItems, setCartItems] = useState([]);
+  const [quantities, setQuantities] = useState(() => {
+    const quantities = [];
+    data.detail_transaction.forEach((item) => {
+      item.quantity = 1;
+      quantities.push(1);
+    });
+    return quantities;
+  });
 
-  const handleQuantityChange = (id, action) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              quantity:
-                action === "increment"
-                  ? item.quantity + 1
-                  : Math.max(item.quantity - 1, 1),
-            }
-          : item
-      )
-    );
+  const handleQuantityChange = (index, action) => {
+    console.log("EXECUTED INCREMENT DECREMENT QUANTITY");
+    console.log("INDEX & ACTION", index, action);
+
+    if (action === "increment") {
+      data.detail_transaction[index].quantity += 1;
+      setQuantities((prevQuantities) => {
+        const newQuantities = [...prevQuantities];
+        newQuantities[index] += 1;
+        return newQuantities;
+      });
+    } else if (action === "decrement") {
+      data.detail_transaction[index].quantity -= 1;
+      setQuantities((prevQuantities) => {
+        const newQuantities = [...prevQuantities];
+        newQuantities[index] -= 1;
+        return newQuantities;
+      });
+    }
+
+    console.log("PRINT DATA TRANSAKSI : ", data.detail_transaction);
   };
 
   const handleRemoveItem = (id) => {
@@ -52,13 +49,15 @@ export default function Keranjang() {
       <div className="p-6">
         <h1 className="text-xl font-bold mb-4">Keranjang Item Transaksi</h1>
         <div className="space-y-4">
-          {cartItems.map((item) => (
+          {data.detail_transaction.map((item, index) => (
             <div
               key={item.id}
               className="flex items-center justify-between bg-white shadow-md rounded-lg p-4"
             >
               <div className="flex items-center gap-4">
-                <div className="text-4xl">{item.image}</div>
+                <div className="text-4xl">
+                  <img src={item.image_url} alt={item.name} width={50} />
+                </div>
                 <div>
                   <p className="font-semibold text-gray-800">{item.name}</p>
                   <p className="text-blue-500 font-medium">
@@ -69,14 +68,14 @@ export default function Keranjang() {
               <div className="flex items-center gap-4">
                 <div className="flex items-center border rounded-md">
                   <button
-                    onClick={() => handleQuantityChange(item.id, "decrement")}
+                    onClick={() => handleQuantityChange(index, "decrement")}
                     className="px-2 py-1 text-gray-700 font-bold hover:bg-gray-100"
                   >
                     -
                   </button>
-                  <span className="px-4">{item.quantity}</span>
+                  <span className="px-4">{quantities[index]}</span>
                   <button
-                    onClick={() => handleQuantityChange(item.id, "increment")}
+                    onClick={() => handleQuantityChange(index, "increment")}
                     className="px-2 py-1 text-gray-700 font-bold hover:bg-gray-100"
                   >
                     +
@@ -91,6 +90,17 @@ export default function Keranjang() {
               </div>
             </div>
           ))}
+          <div className="fixed flex bottom-0 left-0 w-full bg-primary text-white text-center px-6 py-2 justify-between items-center">
+            <div className="flex gap-3 items-center">
+              <p className="text-black">Total</p>
+              <p className="font-bold text-xl text-black">Rp 28.000</p>
+            </div>
+            <div className="flex items-center">
+              <button className="bg-[#6FBF73] text-black py-2 px-4 rounded-3xl flex gap-3">
+                Lanjut <ChevronRight />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </>

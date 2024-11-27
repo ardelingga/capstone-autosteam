@@ -8,20 +8,24 @@ export const menuItems = [
     id: 1,
     title: 'Dashboard',
     icon: dashboardIcon,
+    route: '/dashboard',
   },
   {
     id: 2,
     title: 'Transaksi',
     icon: transactionIcon,
+    route: '/transaksi',
   },
   {
     id: 3,
     title: 'Produk',
     icon: productIcon,
+    route: '/produk',
   },
   {
     id: 4,
     title: 'Pegawai',
     icon: employeeIcon,
+    route: '/pegawai',
   },
 ];

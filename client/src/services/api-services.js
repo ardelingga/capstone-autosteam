@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import { autoLogout } from './LogoutService';
 // import { AUTH_TOKEN } from '../constants/auth-constant';
-// import { getCookie } from './cookie-services';
+import { getCookie } from './cookie-services';
 class ApiService {
   constructor() {
     this.api = axios.create({
@@ -11,6 +11,12 @@ class ApiService {
 
     // Set default headers
     this.setHeader('Content-Type', 'application/json');
+    
+    // set authorization header
+    const access_token = getCookie('access_token');
+    if (access_token) {
+      this.setHeader('Authorization', `Bearer ${access_token}`);
+    }
   }
 
   // Method to set header 

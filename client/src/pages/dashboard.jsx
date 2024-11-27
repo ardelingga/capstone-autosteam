@@ -4,6 +4,7 @@ import { CalendarDays } from 'lucide-react';
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import { ChartContainer } from '@/components/ui/chart';
+import { Link, useNavigate } from "react-router-dom";
 
 const chartData = [
   { name: 'Desktop', value: 1224, color: '#2563eb' }, // Total desktop

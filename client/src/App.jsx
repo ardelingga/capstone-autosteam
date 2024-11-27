@@ -12,6 +12,7 @@ import Keranjang from "./pages/keranjang";
 import DetailTransaksi from "./pages/transaksi-step-3";
 import TransaksiStep3 from "./pages/transaksi-step-3";
 import TransaksiStep4 from "./pages/transaksi-step-4";
+import TambahProduk from "./pages/tambah-product";
 import Struk from "./pages/struk";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         <Route path="transaksi-step-3" element={<TransaksiStep3 />} />
         <Route path="transaksi-step-4" element={<TransaksiStep4 />} />
         <Route path="struk" element={<Struk />} />
+        <Route path="tambah-produk" element={<TambahProduk />} />
         {/* <Layouts>
         </Layouts> */}
       </Routes>

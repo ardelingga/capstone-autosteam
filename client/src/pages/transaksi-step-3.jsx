@@ -135,7 +135,7 @@ export default function TransaksiStep3() {
             </div>
           </div>
         </div>
-        <div className="fixed flex bottom-0 left-0 w-full bg-blue-500 text-white text-center px-6 py-2 justify-between items-center">
+        <div className="fixed flex bottom-0 left-0 w-full bg-primary text-white text-center px-6 py-2 justify-between items-center">
           <div className="flex gap-3 items-center">
             <p className="text-black">Total</p>
             <p className="font-bold text-xl text-black">Rp 28.000</p>

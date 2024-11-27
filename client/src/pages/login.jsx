@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import apiService from "../services/api-services";
 import Swal from 'sweetalert2';
+import LocalStorageService from '../services/local-storage-service';
+import { setCookie } from '../services/cookie-services';
 
 export default function Login() {
   const form = useForm({
@@ -32,6 +34,15 @@ export default function Login() {
       });
 
       if (reqLogin.status === "success") {
+        // Save user data to local storage
+        LocalStorageService.setItem('user_profile', reqLogin.data.user);
+
+        // Set access token to cookie
+        setCookie('access_token', reqLogin.data.access_token, 1);
+        
+        // Set access token to header
+        apiService.setHeader('Authorization', `Bearer ${reqLogin.data.access_token}`);
+
         Swal.fire({
           icon: 'success',
           title: 'Login Berhasil',

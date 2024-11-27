@@ -12,8 +12,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import apiService from "../services/api-services";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import LocalStorageService from "../services/local-storage-service";
+import { setCookie } from '../services/cookie-services';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -38,24 +40,37 @@ export default function Register() {
       });
 
       if (reqRegister.status === "success") {
+        // Save user data to local storage
+        LocalStorageService.setItem("user_profile", reqRegister.data.user);
+
+        // Set access token to cookie
+        setCookie("access_token", reqRegister.data.access_token, 1);
+
+        // Set access token to header
+        apiService.setHeader(
+          "Authorization",
+          `Bearer ${reqRegister.data.access_token}`
+        );
         Swal.fire({
-          icon: 'success',
-          title: 'Registrasi Berhasil',
-          text: 'Akun Anda telah berhasil dibuat!',
+          icon: "success",
+          title: "Registrasi Berhasil",
+          text: "Akun Anda telah berhasil dibuat!",
         });
-        navigate('/home'); 
-      }else{
+        navigate("/home");
+      } else {
         Swal.fire({
-          icon: 'error',
-          title: 'Registrasi Gagal',
+          icon: "error",
+          title: "Registrasi Gagal",
           text: reqRegister.data.message,
         });
       }
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Registrasi Gagal',
-        text: error.response?.data?.message || 'Terjadi kesalahan, silakan coba lagi.',
+        icon: "error",
+        title: "Registrasi Gagal",
+        text:
+          error.response?.data?.message ||
+          "Terjadi kesalahan, silakan coba lagi.",
       });
     }
   }
@@ -188,10 +203,10 @@ export default function Register() {
                     </FormControl>
 
                     <FormMessage>
-                  {form.formState.errors.address && (
-                    <span>{form.formState.errors.address.message}</span>
-                  )}
-                </FormMessage>
+                      {form.formState.errors.address && (
+                        <span>{form.formState.errors.address.message}</span>
+                      )}
+                    </FormMessage>
                   </FormItem>
                 )}
               />
