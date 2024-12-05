@@ -2,11 +2,14 @@ import NavMobile from "@/components/nav-mobile";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Keranjang() {
+  const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
   const [cartItems, setCartItems] = useState([]);
+  const [grandTotal, setGrandTotal] = useState(0);
   const [quantities, setQuantities] = useState(() => {
     const quantities = [];
     data.detail_transaction.forEach((item) => {
@@ -27,6 +30,7 @@ export default function Keranjang() {
         newQuantities[index] += 1;
         return newQuantities;
       });
+      setGrandTotal(quantities[index] * data.detail_transaction[index].price);
     } else if (action === "decrement") {
       data.detail_transaction[index].quantity -= 1;
       setQuantities((prevQuantities) => {
@@ -34,14 +38,39 @@ export default function Keranjang() {
         newQuantities[index] -= 1;
         return newQuantities;
       });
+      setGrandTotal(quantities[index] * data.detail_transaction[index].price);
     }
 
-    console.log("PRINT DATA TRANSAKSI : ", data.detail_transaction);
+    console.log("PRINT DATA TRANSAKSI : ", data.grand_total);
   };
 
   const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    data.detail_transaction = data.detail_transaction.filter(
+      (item) => item.id !== id
+    );
+    setCartItems(data.detail_transaction);
+    setGrandTotal(
+      data.detail_transaction
+        .map((item) => item.quantity * item.price)
+        .reduce((a, b) => a + b, 0)
+    );
   };
+
+  const handleNextStepTransaction = () => {
+    navigate("/transaksi-step-3", { state: data });
+    // console.log(data);
+  };
+
+  useEffect(() => {
+    setGrandTotal(
+      data.detail_transaction
+        .map((item) => item.quantity * item.price)
+        .reduce((a, b) => a + b, 0)
+    );
+    data.grand_total = grandTotal;
+    console.log("PRINT DATA TRANSAKSI : ", data.grand_total);
+    console.log("PRINT DATA TRANSAKSI : ", data);
+  });
 
   return (
     <>
@@ -93,10 +122,15 @@ export default function Keranjang() {
           <div className="fixed flex bottom-0 left-0 w-full bg-primary text-white text-center px-6 py-2 justify-between items-center">
             <div className="flex gap-3 items-center">
               <p className="text-black">Total</p>
-              <p className="font-bold text-xl text-black">Rp 28.000</p>
+              <p className="font-bold text-xl text-black">
+                Rp {grandTotal.toLocaleString()}
+              </p>
             </div>
             <div className="flex items-center">
-              <button className="bg-[#6FBF73] text-black py-2 px-4 rounded-3xl flex gap-3">
+              <button
+                className="bg-[#6FBF73] text-black py-2 px-4 rounded-3xl flex gap-3"
+                onClick={handleNextStepTransaction}
+              >
                 Lanjut <ChevronRight />
               </button>
             </div>

@@ -7,7 +7,7 @@ export default function ModalTransaksi() {
     <div className="relative">
       <button
         className="bg-[#6FBF73] w-full p-2.5 shadow-md rounded-2xl text-xl font-bold"
-        onClick={() => setIsOpen(true)}
+        onSubmit={() => setIsOpen(true)}
       >
         Tambah Transaksi
       </button>

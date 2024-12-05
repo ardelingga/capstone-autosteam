@@ -47,10 +47,16 @@ export default function AddTransaksi() {
   const [detailTransaction, setDetailTransaction] = useState([]);
   const addTransaction = {
     grand_total: 0,
-    payment_method_id: 1,
-    total_payment: 5000,
+    payment_method_id: null,
+    total_payment: 0,
     money_changes: 0,
     detail_transaction: detailTransaction,
+    customer: {
+      id: null,
+      name: "Nuril Anwar Al Absory",
+      phone_number: Number("081234567890"),
+    },
+    employees_array_text: "Abzhor",
   };
   let [numberSelected, setNumberSelected] = useState(0);
 
@@ -70,7 +76,6 @@ export default function AddTransaksi() {
 
   useEffect(() => {
     setNumberSelected(detailTransaction.length);
-    console.log(detailTransaction);
   }, [detailTransaction]);
 
   // function to init the transaction page
