@@ -100,12 +100,11 @@ export default function Transaksi() {
         </div>
       </div>
       {/* Floating Button */}
-      <button
-        onClick={handleAddTransaction}
+      <Link to={"/tambah-transaksi"}
         className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition duration-300"
       >
         +
-      </button>
+      </Link>
     </div>
   );
 }
