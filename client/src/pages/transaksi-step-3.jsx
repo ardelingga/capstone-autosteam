@@ -11,7 +11,7 @@ export default function TransaksiStep3() {
   console.log("Step-3 data", data);
 
   const handleNextTransaction = () => {
-    navigate("/transaksi-step-4", { state: data });
+    navigate("/transaksi/transaksi-step-4", { state: data });
   };
 
   return (

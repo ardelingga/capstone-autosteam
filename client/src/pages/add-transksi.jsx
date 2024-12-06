@@ -53,10 +53,10 @@ export default function AddTransaksi() {
     detail_transaction: detailTransaction,
     customer: {
       id: null,
-      name: "Nuril Anwar Al Absory",
-      phone_number: Number("081234567890"),
+      name: "David",
+      phone_number: Number("08111234342"),
     },
-    employees_array_text: "Abzhor",
+    employees_array_text: "Cep, Rizal, Dwi",
   };
   let [numberSelected, setNumberSelected] = useState(0);
 
@@ -71,7 +71,7 @@ export default function AddTransaksi() {
   };
 
   const handleCheckout = () => {
-    navigate("/keranjang", { state: addTransaction });
+    navigate("/transaksi/keranjang", { state: addTransaction });
   };
 
   useEffect(() => {

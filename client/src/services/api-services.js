@@ -5,13 +5,13 @@ import { getCookie } from './cookie-services';
 class ApiService {
   constructor() {
     this.api = axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL, 
-      timeout: 10000, 
+      baseURL: import.meta.env.VITE_API_BASE_URL,
+      timeout: 100000,
     });
 
     // Set default headers
     this.setHeader('Content-Type', 'application/json');
-    
+
     // set authorization header
     const access_token = getCookie('access_token');
     if (access_token) {

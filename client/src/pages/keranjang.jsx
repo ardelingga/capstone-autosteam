@@ -57,7 +57,7 @@ export default function Keranjang() {
   };
 
   const handleNextStepTransaction = () => {
-    navigate("/transaksi-step-3", { state: data });
+    navigate("/transaksi/transaksi-step-3", { state: data });
     // console.log(data);
   };
 
