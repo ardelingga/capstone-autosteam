@@ -40,7 +40,7 @@ export default function Transaksi() {
 
   // handle button click
   const handleAddTransaction = () => {
-    navigate("/tambah-transaksi");
+    navigate("/transaksi/tambah-transaksi");
   };
 
   return (
