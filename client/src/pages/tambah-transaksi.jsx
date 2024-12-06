@@ -44,24 +44,20 @@ export default function AddTransaksi() {
 
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [detailTransaction, setDetailTransaction] = useState([]);
+  const [detailTransactions, setDetailTransactions] = useState([]);
   const addTransaction = {
     grand_total: 0,
     payment_method_id: null,
     total_payment: 0,
     money_changes: 0,
-    detail_transaction: detailTransaction,
-    customer: {
-      id: null,
-      name: "David",
-      phone_number: Number("08111234342"),
-    },
+    detail_transactions: detailTransactions,
+    customer: {},
     employees_array_text: "Cep, Rizal, Dwi",
   };
   let [numberSelected, setNumberSelected] = useState(0);
 
-  const handledetailTransaction = (productId) => {
-    setDetailTransaction((prevState) => {
+  const handleDetailTransactions = (productId) => {
+    setDetailTransactions((prevState) => {
       if (prevState.includes(productId)) {
         return prevState.filter((id) => id !== productId);
       } else {
@@ -75,8 +71,8 @@ export default function AddTransaksi() {
   };
 
   useEffect(() => {
-    setNumberSelected(detailTransaction.length);
-  }, [detailTransaction]);
+    setNumberSelected(detailTransactions.length);
+  }, [detailTransactions]);
 
   // function to init the transaction page
   const initAddTransactionPage = async () => {
@@ -112,11 +108,10 @@ export default function AddTransaksi() {
             {categories.map((category, index) => (
               <button
                 key={index}
-                className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                  category === "Semua"
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${category === "Semua"
                     ? "bg-blue-500 text-white"
                     : "bg-gray-100 text-gray-600"
-                }`}
+                  }`}
               >
                 {category}
               </button>
@@ -136,14 +131,13 @@ export default function AddTransaksi() {
           {products.map((product) => (
             <div
               key={product.id}
-              className={`bg-white flex flex-col items-center p-4 rounded-lg shadow-md ${
-                detailTransaction
+              className={`bg-white flex flex-col items-center p-4 rounded-lg shadow-md ${detailTransactions
                   .map((product) => product.id)
                   .includes(product.id)
                   ? "border border-blue-500"
                   : ""
-              }`}
-              onClick={() => handledetailTransaction(product)}
+                }`}
+              onClick={() => handleDetailTransactions(product)}
             >
               <div className="text-4xl mb-4">
                 <img width={50} src={product.image_url} alt="" />

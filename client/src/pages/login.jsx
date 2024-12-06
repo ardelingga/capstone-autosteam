@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,7 @@ import LocalStorageService from '../services/local-storage-service';
 import { setCookie } from '../services/cookie-services';
 
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     defaultValues: {
       email: "",
@@ -26,7 +27,15 @@ export default function Login() {
   });
   const navigate = useNavigate();
 
+  const initLoginPage = () => {
+    if (LocalStorageService.getItem('user_profile')) {
+      navigate('/home');
+    }
+  }
+
+
   async function onSubmit(values) {
+    setIsLoading(true);
     try {
       const reqLogin = await apiService.post("/auth/signin", {
         email: values.email,
@@ -39,7 +48,7 @@ export default function Login() {
 
         // Set access token to cookie
         setCookie('access_token', reqLogin.data.access_token, 1);
-        
+
         // Set access token to header
         apiService.setHeader('Authorization', `Bearer ${reqLogin.data.access_token}`);
 
@@ -48,6 +57,7 @@ export default function Login() {
           title: 'Login Berhasil',
           text: 'Selamat datang!',
         });
+        navigate('/home');
       }else {
         Swal.fire({
           icon: 'error',
@@ -55,15 +65,20 @@ export default function Login() {
           text: reqLogin.data.message,
         });
       }
-      navigate('/home'); 
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Login Gagal',
         text: error.response?.data?.message || 'Terjadi kesalahan, silakan coba lagi.',
       });
+    } finally {
+      setIsLoading(false); // Selesai loading
     }
   }
+
+  useEffect(() => {
+    initLoginPage();
+  }, []);
 
   return (
     <div className="container mx-auto px-4">
@@ -153,8 +168,12 @@ export default function Login() {
                   Forgot Password
                 </a>
               </div>
-              <Button type="submit" className="w-full mt-9">
-                Log In
+              <Button
+                  type="submit"
+                  className="w-full mt-9"
+                  disabled={isLoading} // Disable button saat loading
+              >
+                {isLoading ? "Logging In..." : "Log In"}
               </Button>
               <Button type="submit" variant="outline" className="w-full mt-5">
                 <img

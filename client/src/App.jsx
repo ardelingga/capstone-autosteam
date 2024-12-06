@@ -7,13 +7,13 @@ import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
 import Home from "./pages/home";
 import Transaksi from "./pages/transaksi";
-import AddTransaksi from "./pages/add-transksi";
-import Keranjang from "./pages/keranjang";
+import AddTransaksi from "./pages/tambah-transaksi";
+import Keranjang from "./pages/keranjang-transaksi";
 import DetailTransaksi from "./pages/transaksi-step-3";
 import TransaksiStep3 from "./pages/transaksi-step-3";
 import TransaksiStep4 from "./pages/transaksi-step-4";
-import TambahProduk from "./pages/tambah-product";
-import Struk from "./pages/struk";
+import TambahProduk from "./pages/tambah-produk";
+import Struk from "./pages/struk-transaksi";
 
 function App() {
   const browserHistory = history.createBrowserHistory();

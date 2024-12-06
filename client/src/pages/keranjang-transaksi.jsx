@@ -12,7 +12,7 @@ export default function Keranjang() {
   const [grandTotal, setGrandTotal] = useState(0);
   const [quantities, setQuantities] = useState(() => {
     const quantities = [];
-    data.detail_transaction.forEach((item) => {
+    data.detail_transactions.forEach((item) => {
       item.quantity = 1;
       quantities.push(1);
     });
@@ -24,33 +24,33 @@ export default function Keranjang() {
     console.log("INDEX & ACTION", index, action);
 
     if (action === "increment") {
-      data.detail_transaction[index].quantity += 1;
+      data.detail_transactions[index].quantity += 1;
       setQuantities((prevQuantities) => {
         const newQuantities = [...prevQuantities];
         newQuantities[index] += 1;
         return newQuantities;
       });
-      setGrandTotal(quantities[index] * data.detail_transaction[index].price);
+      setGrandTotal(quantities[index] * data.detail_transactions[index].price);
     } else if (action === "decrement") {
-      data.detail_transaction[index].quantity -= 1;
+      data.detail_transactions[index].quantity -= 1;
       setQuantities((prevQuantities) => {
         const newQuantities = [...prevQuantities];
         newQuantities[index] -= 1;
         return newQuantities;
       });
-      setGrandTotal(quantities[index] * data.detail_transaction[index].price);
+      setGrandTotal(quantities[index] * data.detail_transactions[index].price);
     }
 
     console.log("PRINT DATA TRANSAKSI : ", data.grand_total);
   };
 
   const handleRemoveItem = (id) => {
-    data.detail_transaction = data.detail_transaction.filter(
+    data.detail_transactions = data.detail_transactions.filter(
       (item) => item.id !== id
     );
-    setCartItems(data.detail_transaction);
+    setCartItems(data.detail_transactions);
     setGrandTotal(
-      data.detail_transaction
+      data.detail_transactions
         .map((item) => item.quantity * item.price)
         .reduce((a, b) => a + b, 0)
     );
@@ -63,7 +63,7 @@ export default function Keranjang() {
 
   useEffect(() => {
     setGrandTotal(
-      data.detail_transaction
+      data.detail_transactions
         .map((item) => item.quantity * item.price)
         .reduce((a, b) => a + b, 0)
     );
@@ -74,11 +74,11 @@ export default function Keranjang() {
 
   return (
     <>
-      <NavMobile title={"Transaksi"} />
+      <NavMobile title={"Keranjang Transaksi"} />
       <div className="p-6">
         <h1 className="text-xl font-bold mb-4">Keranjang Item Transaksi</h1>
         <div className="space-y-4">
-          {data.detail_transaction.map((item, index) => (
+          {data.detail_transactions.map((item, index) => (
             <div
               key={item.id}
               className="flex items-center justify-between bg-white shadow-md rounded-lg p-4"

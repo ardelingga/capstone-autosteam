@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { number } from "zod";
 
 export default function TransaksiStep4() {
   const location = useLocation();
@@ -58,34 +57,80 @@ export default function TransaksiStep4() {
     console.log("formatted value", formattedValue);
   };
 
+  function mapPayloadBeforeSending(data) {
+
+    const mappedDetailTransactions = data.detail_transactions.map(item => {
+
+      const mappedVehicles = item.vehicles?.map(vehicle => ({
+        id: null,
+        name: vehicle.namaKendaraan,
+        type: vehicle.jenisKendaraan || 'Motor',
+        plate_number: vehicle.platNomor
+      })) || null;
+
+      return {
+        product_id: item.id,
+        product_code: item.code,
+        product_name: item.name,
+        product_type: item.type,
+        quantity: item.quantity,
+        price: item.price,
+        total_price: item.price * item.quantity,
+        vehicles: mappedVehicles
+      };
+    });
+
+    const mappedCustomer = {
+      id: null,
+      name: data.customer.name,
+      phone_number: Number(data.customer.phone_number)
+    };
+
+    const mappedPayload = {
+      grand_total: data.grand_total,
+      payment_method_id: data.payment_method_id,
+      total_payment: data.total_payment,
+      money_changes: data.money_changes,
+      detail_transactions: mappedDetailTransactions,
+      customer: mappedCustomer,
+      employees_array_text: data.employees_array_text
+    };
+
+    return mappedPayload;
+  }
+
   const handleAddTransaction = async () => {
     try {
-      const modifiedDetailTransactions = data.detail_transaction.map((item) => {
-        return {
-          product_id: item.id,
-          product_code: item.code,
-          product_name: item.name,
-          product_type: item.type,
-          quantity: item.quantity,
-          price: item.price,
-          total_price: item.quantity * item.price,
-          vehicles: [
-            {
-              id: null,
-              name: "Toyota Avanza",
-              type: "Mobil",
-              plate_number: "B 134 IY",
-            },
-          ],
-        };
-      });
-
-      delete data.detail_transaction;
-      data.detail_transactions = modifiedDetailTransactions;
+      data.total_payment = totalPayment;
+      data.money_changes = moneyChanges;
+      const cleanedData = mapPayloadBeforeSending(data);
       console.log("PRINT DATA : ");
-      console.log(data);
+      console.log(cleanedData);
+      // const modifiedDetailTransactions = data.detail_transaction.map((item) => {
+      //   return {
+      //     product_id: item.id,
+      //     product_code: item.code,
+      //     product_name: item.name,
+      //     product_type: item.type,
+      //     quantity: item.quantity,
+      //     price: item.price,
+      //     total_price: item.quantity * item.price,
+      //     vehicles: [
+      //       {
+      //         id: null,
+      //         name: "Toyota Avanza",
+      //         type: "Mobil",
+      //         plate_number: "B 134 IY",
+      //       },
+      //     ],
+      //   };
+      // });
+      //
+      // delete data.detail_transaction;
+      // data.detail_transactions = modifiedDetailTransactions;
 
-      const reqAddTransaction = await apiService.post("/transactions", data);
+
+      const reqAddTransaction = await apiService.post("/transactions", cleanedData);
       if (reqAddTransaction.status === "success") {
         console.log(reqAddTransaction.data);
         setIsOpen(true);
