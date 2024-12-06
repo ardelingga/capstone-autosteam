@@ -22,16 +22,16 @@ function App() {
     <BrowserRouter history={browserHistory}>
       <Routes>
         <Route index element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="home" element={<Home />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="transaksi" element={<Transaksi />} />
-        <Route path="tambah-transaksi" element={<AddTransaksi />} />
-        <Route path="keranjang" element={<Keranjang />} />
-        <Route path="transaksi-step-3" element={<TransaksiStep3 />} />
-        <Route path="transaksi-step-4" element={<TransaksiStep4 />} />
-        <Route path="struk" element={<Struk />} />
-        <Route path="tambah-produk" element={<TambahProduk />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/transaksi" element={<Transaksi />} />
+        <Route path="/transaksi/tambah-transaksi" element={<AddTransaksi />} />
+        <Route path="/transaksi/keranjang" element={<Keranjang />} />
+        <Route path="/transaksi/transaksi-step-3" element={<TransaksiStep3 />} />
+        <Route path="/transaksi/transaksi-step-4" element={<TransaksiStep4 />} />
+        <Route path="/struk" element={<Struk />} />
+        <Route path="/tambah-procduk" element={<TambahProduk />} />
         {/* <Layouts>
         </Layouts> */}
       </Routes>
