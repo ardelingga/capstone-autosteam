@@ -45,7 +45,7 @@ export default function Transaksi() {
 
   return (
     <div>
-      <NavMobile title={"Dashboard"} />
+      <NavMobile title={"Transaksi"} />
       <div className="mt-6">
         <div className="p-6">
           {/* Header */}
@@ -100,11 +100,12 @@ export default function Transaksi() {
         </div>
       </div>
       {/* Floating Button */}
-      <Link to={"/transaksi/tambah-transaksi"}
+      <button
+        onClick={handleAddTransaction}
         className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition duration-300"
       >
         +
-      </Link>
+      </button>
     </div>
   );
 }
