@@ -16,10 +16,17 @@ export default function Transaksi() {
     try {
       const reqTrasaction = await apiService.get("/transactions");
 
-      if(reqTrasaction.status === "success") {
+      console.log("PRINT REQUEST");
+      console.log(reqTrasaction);
+
+      console.log("PRINT DATA : ", reqTrasaction.data);
+
+      if (reqTrasaction.status === "success") {
         setTransactions(reqTrasaction.data);
       }
-      
+
+      console.log("PRINT DATA : ", transactions);
+
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -67,7 +74,7 @@ export default function Transaksi() {
                 <p className="text-black font-bold">
                   {transaction.code_transaction}
                 </p>
-                <p className="text-gray-500">{transaction.customer.name}</p>
+                <p className="text-gray-500">{transaction.customer ? transaction.customer.name : "Unknown Customer"}</p>
                 <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-md text-sm font-semibold mt-2">
                   {transaction.grand_total}
                 </span>
@@ -84,7 +91,7 @@ export default function Transaksi() {
                     <i className="fas fa-wallet"></i>
                   </span>
                   <span className="text-yellow-600 font-semibold">
-                    {transaction.payment_method.name}
+                    {transaction.payment_method ? transaction.payment_method.name : "Unknown Method"}
                   </span>
                 </div>
               </div>
