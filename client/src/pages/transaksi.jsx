@@ -40,7 +40,7 @@ export default function Transaksi() {
 
   return (
     <div>
-      <NavMobile title={"Dashboard"} />
+      <NavMobile title={"Transaksi"} />
       <div className="mt-6">
         <div className="p-6">
           {/* Header */}
